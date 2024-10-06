@@ -1,0 +1,81 @@
+\section*{NADE}
+
+\begin{frame}{Neural Autoregressive Density Estimator(NADE)}
+    Here we add a neural network layer to approximate the factors $p(X_i|X_{<i})$ \\
+
+    \textbf{Output: } $n$ dimensional vector $p(X_i|X_{<i})$ for $i=1,2,...,D$ \\
+
+    \bigskip
+
+    But the $k$th output should see inputs $X_{<k}$ only. \\
+\end{frame}
+
+\begin{frame}{Adding a neural network layer}
+
+    Consider $X \in \mathbb{R}^N$ and $h_k \in \mathbb{R}^D$ be the hidden representation for the $k$th output. \\
+    \bigskip
+
+    For the $k$th output, the hidden representation will be computed using previous $k-1$ inputs. \\
+
+    \[ \boxed{h_k = \sigma(W_{.,<k}X_{<k} + b)} \]
+
+    where $W$ is the weight matrix which is shared during the computation of $h_k$ for all $k$. \\
+
+    \bigskip
+
+    Here $W_{.,<k}$ represents first $k-1$ columns of $W$.
+\end{frame}
+
+\begin{frame}{Computing output from hidden representation}
+    We now compute the output $p(X_k|X_{<k})$ using the hidden representation $h_k$ as follows: 
+    
+    \bigskip
+
+    \[ y_k = p(X_k | h_k) = \sigma(V_kh_k + c_k) \]
+    
+\end{frame}
+
+\begin{frame}{Final Equations}
+    So here is our model: \\
+    
+    \[ h_k = \sigma(W_{.,<k}X_{<k} + b) \]
+    \[ y_k = p(X_k | h_k) = \sigma(V_kh_k + c_k) \]
+
+    $\Sigma = \{ W, V, b, c \}$ are the parameters of the model. \\
+
+\end{frame}
+
+\begin{frame}{Calculating the number of parameters}
+    
+    But how many parameters are there:
+
+    \begin{enumerate}
+        \item $W \in \mathbb{R}^{D \times N} \implies DN $ parameters
+        \item $b = \{b_1,b_2,...,b_D\} \implies D$ parameters
+        \item $V_k \in \mathbb{R}^{D}$ for $k=1,2,...,N \implies DN$ parameters
+        \item $c = \{c_1,c_2,...,c_N\} \implies N$ parameters
+        \item $h_1 \in \mathbb{R}^D$ is also a parameter $\implies D$ parameters
+    \end{enumerate}
+
+    \bigskip
+    
+    Hence total number of parameters are $2DN + 2D + N \sim O(DN)$
+    
+\end{frame}
+
+\begin{frame}{Generation: Binary Random Variable}
+
+    1. Compute $p(X_1=1) = \sigma(V_1h_1 + c_1) = t_1$ where $t_1 \in [0,1]$ \\
+    2. Sample $m_1 \sim Unif[0,1]$, if $m_1 < t_1$ then $X_1 = 1$ else $X_1 = 0$ \\
+    3. Compute $p(X_2=1|X_1) = \sigma(V_2h_2 + c_2) = t_2$ where $t_2 \in [0,1]$ \\
+    4. Sample $m_2 \sim Unif[0,1]$, if $m_2 < t_2$ then $X_2 = 1$ else $X_2 = 0$ \\
+
+    \bigskip
+
+    Repeat this process for $X_3,X_4,...,X_D$ to generate a sample from the distribution $p(X)$
+
+\end{frame}
+
+\begin{frame}{Experimental Results}
+    
+\end{frame}

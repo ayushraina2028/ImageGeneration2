@@ -1,0 +1,36 @@
+\section*{FVSBN}
+\begin{frame}{Fully Visible Sigmoid Belief Net(FVSBN)}
+    \begin{enumerate}
+        \item In this model,for $X=(X_1,X_2,...,X_D) \in \mathbb{R^{D}}$ each $X_i \sim Bernoulli(p_i)$ where $p_i = p(X_i=1|X_{<i})$.
+        \item Functional form of $p(X_i|X_{<i})$ is given by Sigmoid function:
+    \end{enumerate}
+
+    \[\boxed{p(X_i=1|X_{<i}) = \sigma(\sum_{j=1}^{i-1} w^{(i)}_{j}X_j + b_i)}\]
+
+    where $\sigma(x) = \frac{1}{1+e^{-x}}$ is the sigmoid function, $w^{(i)}_{j}$ are the weights and $b_i$ is the bias. \\
+
+    \begin{enumerate}
+        \setcounter{enumi}{2}
+        \item $\sum_{j=1}^{i-1} w^{(i)}_{j}X_j + b_i$ is the linear combination of inputs
+        \item $\Sigma = \{w^{(i)}_{j},b_i\}$ are the parameters of the model.
+    \end{enumerate}
+    \bigskip
+
+    For predicting the $p(X_i)$ only inputs used are $X_{<i}$
+\end{frame}
+
+\begin{frame}{Fully Visible Sigmoid Belief Net(FVSBN)}
+    \[\boxed{p(X_i=1|X_{<i}) = \sigma(\sum_{j=1}^{i-1} w^{(i)}_{j}X_j + b_i)}\]
+    How many parameters are required now ? \\
+
+    \begin{enumerate}
+        \item for each $i$, we have $i$ weights i.e $w^{(i)}_0, w^{(i)}_1,...,w^{(i)}_{i-1}$ and 1 bias $b_i$
+        \item Hence total number of parameters required are \[\boxed{(1+2+3+...+D) + D = \frac{D(D+1)}{2} + D = \frac{D(D+3)}{2}}\]
+    \end{enumerate}
+
+    Better than exponential number of parameters.
+\end{frame}
+
+\begin{frame}{Experimental Results}
+    
+\end{frame}

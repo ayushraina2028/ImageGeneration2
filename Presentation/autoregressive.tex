@@ -1,0 +1,45 @@
+\section*{Autoregressive models}
+\begin{frame}{Aim}
+    We want to model the distribution $p(\textbf{X}) = p(X_1,X_2,...,X_D)$ where $X \in \mathbb{R}^D$ so that:
+    \begin{itemize}
+        \item \textbf{Generation:} If we sample $X_{new} \sim p(\textbf{X})$, it should look like the data 
+        \item \textbf{Density Estimation:} If a training point $X$ is similar to data, $p(X)$ should be high
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Autoregressive Models}
+    These models do not assume any conditional independence assumptions and they use chain rule factorization given by:
+    
+    \bigskip
+
+    \[\boxed{p(X) = \prod_{i=1}^{D} p(X_i|X_{<i})}\] 
+    
+    \bigskip
+
+    where $X_{<i} = \{X_1,X_2,...,X_{i-1}\}$ and $X \in \mathbb{R}^D$
+\end{frame}
+
+\begin{frame}{Autoregressive Models}
+    \[\boxed{p(X) = \prod_{i=1}^{D} p(X_i|X_{<i})}\]
+    But the number of parameters required to model the $D$ factors of the above distribution are $1,2,4,8,...,2^{D-1}$ 
+
+    \bigskip
+
+    hence total number of parameters required are \[\boxed{1+2+4+8+...+2^{D-1} = 2^D - 1}\] which is exponential in $D$. \\
+    It is not feasible to learn exponential number of parameters.
+\end{frame}
+
+\begin{frame}{Autoregressive Models}
+    These models assume a functional form to approximate the factors of the distribution. \\
+    \[p(X_i|X_{<i}) = f(X_i,X_{<i};\theta_i)\]
+
+    where $f$ is a function which approximates the factor $p(X_i|X_{<i})$ and $\theta_i$ are the parameters of the function $f$.
+\end{frame}
+
+\begin{frame}{Autoregressive Models}
+    We cannot use fully connected neural network here because while predicting the $p(X_i)$, the inputs used are $X_{<i}$ \\
+
+    \bigskip
+    
+    In the fully connected neural network, all the inputs are used to predict the output. \\
+\end{frame}
